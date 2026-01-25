@@ -49,16 +49,14 @@ class MainActivity : ComponentActivity() {
                                 onEvent = categoriesViewModel::onEvent,
                                 onCategoryClick = { category ->
                                     val nameEncoded = Uri.encode(category.name)
-                                    val descEncoded = Uri.encode(category.description ?: "")
-                                    navController.navigate("Meals/$nameEncoded/$descEncoded")
+                                    navController.navigate("Meals/$nameEncoded")
                                 }
                             )
                         }
                         composable(
-                            route = "Meals/{categoryName}/{categoryDescription}",
+                            route = "Meals/{categoryName}",
                             arguments = listOf(
                                 navArgument("categoryName") { type = NavType.StringType },
-                                navArgument("categoryDescription") { type = NavType.StringType }
                             )
                         ) { backStackEntry ->
                             val categoryName = backStackEntry.arguments
@@ -66,10 +64,6 @@ class MainActivity : ComponentActivity() {
                                 ?.let { Uri.decode(it) }
                                 .orEmpty()
 
-                            val categoryDescription = backStackEntry.arguments
-                                ?.getString("categoryDescription")
-                                ?.let { Uri.decode(it) }
-                                .orEmpty()
 
                             val mealsViewModel: MealsViewModel = viewModel()
                             val state by mealsViewModel.state.collectAsStateWithLifecycle()
@@ -77,9 +71,9 @@ class MainActivity : ComponentActivity() {
                             MealsScreen(
                                 modifier = Modifier.padding(paddingValues),
                                 categoryName = categoryName,
-                                categoryDescription = categoryDescription,
                                 state = state,
-                                onEvent = mealsViewModel::onEvent
+                                onEvent = mealsViewModel::onEvent,
+                                onBackClick = { navController.popBackStack() }
                             )
                         }
                     }
