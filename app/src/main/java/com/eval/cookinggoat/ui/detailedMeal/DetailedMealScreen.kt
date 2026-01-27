@@ -23,48 +23,14 @@ import com.eval.cookinggoat.ui.meals.MealsState
 @Composable
 fun DetailedMealScreen (
     modifier: Modifier,
-    categoryName: String,
-    categoryDescription: String,
+    mealId: String,
     state: MealsState,
-    onEvent: (MealsUIEvent) -> Unit
+    onEvent: (MealsUIEvent) -> Unit,
+    onBackClick: () -> Unit
 ) {
-    LaunchedEffect(categoryName) {
-        onEvent(MealsUIEvent.findReceipes(categoryName))
-    }
-    Column(
-        modifier = modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = categoryDescription,
-            fontSize = 16.sp
-        )
-        Text(
-            text = "Choose a meal :",
-            fontSize = 30.sp,
-            fontWeight = FontWeight.Bold
-        )
-        Spacer(modifier = Modifier.height(10.dp))
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            contentPadding = androidx.compose.foundation.layout.PaddingValues(12.dp),
-            horizontalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(12.dp),
-            verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(12.dp)
-        ) {
-            items(state.meals) { meal ->
-                MealCard(
-                    modifier = Modifier,
-                    meal = meal,
-                    onClick = { println("clicked")
-                    }
-                )
-            }
-        }
-        if (state.isLoading) {
-            Box(modifier = Modifier.fillMaxSize()) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            }
-        }
-    }
+
+    Text(
+        text = mealId
+    )
 
 }

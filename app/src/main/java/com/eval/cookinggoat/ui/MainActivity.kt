@@ -21,7 +21,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.eval.cookinggoat.ui.categories.CategoriesScreen
 import com.eval.cookinggoat.ui.categories.CategoriesViewModel
+import com.eval.cookinggoat.ui.detailedMeal.DetailedMealScreen
+import com.eval.cookinggoat.ui.detailedMeal.DetailedMealViewModel
 import com.eval.cookinggoat.ui.meals.MealsScreen
+import com.eval.cookinggoat.ui.meals.MealsState
 import com.eval.cookinggoat.ui.meals.MealsViewModel
 import com.eval.cookinggoat.ui.theme.CookingKingTheme
 
@@ -73,6 +76,34 @@ class MainActivity : ComponentActivity() {
                                 categoryName = categoryName,
                                 state = state,
                                 onEvent = mealsViewModel::onEvent,
+                                onBackClick = { navController.popBackStack() },
+                                onMealClick = { meal ->
+                                    val IdEncoded = Uri.encode(meal.id.toString())
+                                    navController.navigate("Meals/$IdEncoded")
+                                }
+                            )
+                        }
+                        composable(
+                            route = "Meals/{id}",
+                            arguments = listOf(
+                                navArgument("mealId") { type = NavType.StringType },
+                            )
+                        ) { backStackEntry ->
+                            val mealId = backStackEntry.arguments
+                                ?.getString("mealId")
+                                ?.let { Uri.decode(it) }
+                                .orEmpty()
+
+                            Text(text = "Meal Details for ID: $mealId")
+
+                            val detailedMealViewModel: DetailedMealViewModel = viewModel()
+                            val state by detailedMealViewModel.state.collectAsStateWithLifecycle()
+
+                            DetailedMealScreen(
+                                modifier = Modifier.padding(paddingValues),
+                                mealId = mealId,
+                                state = state,
+                                onEvent = detailedMealViewModel::onEvent,
                                 onBackClick = { navController.popBackStack() }
                             )
                         }

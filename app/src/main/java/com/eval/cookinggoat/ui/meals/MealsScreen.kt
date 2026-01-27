@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.eval.cookinggoat.domain.model.Meal
 import com.eval.cookinggoat.ui.component.MealCard
 import com.eval.cookinggoat.ui.component.SearchBar
 
@@ -34,7 +35,8 @@ fun MealsScreen (
     categoryName: String,
     state: MealsState,
     onEvent: (MealsUIEvent) -> Unit,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onMealClick: (Meal) -> Unit
 ) {
     LaunchedEffect(categoryName) {
         onEvent(MealsUIEvent.findReceipes(categoryName))
@@ -83,7 +85,7 @@ fun MealsScreen (
                 MealCard(
                     modifier = Modifier,
                     meal = meal,
-                    onClick = { println("clicked")
+                    onClick = { onMealClick
                     }
                 )
             }
