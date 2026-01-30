@@ -1,6 +1,8 @@
 package com.eval.cookinggoat.data.network
 import com.eval.cookinggoat.data.network.dto.response.CategoryResponse
-import com.eval.cookinggoat.data.network.dto.response.MealResponse
+import com.eval.cookinggoat.data.network.dto.response.MealDetailDTO
+import com.eval.cookinggoat.data.network.dto.response.MealDetailResponse
+import com.eval.cookinggoat.data.network.dto.response.MealListResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -10,8 +12,8 @@ interface ApiService {
     suspend fun getAllCategories(): CategoryResponse
 
     @GET("filter.php")
-    suspend fun searchMeals(@Query("c") categoryName: String): MealResponse
+    suspend fun searchMeals(@Query("c") categoryName: String): MealListResponse
 
-//    @GET("search")
-//    suspend fun searchReceipe(@Query("tt") search: String): MovieResponse
+    @GET("lookup.php")
+    suspend fun getMealDetails(@Query("i") mealId: Int): MealDetailResponse
 }

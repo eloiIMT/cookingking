@@ -85,8 +85,7 @@ fun MealsScreen (
                 MealCard(
                     modifier = Modifier,
                     meal = meal,
-                    onClick = { onMealClick
-                    }
+                    onClick = { onMealClick(it) }
                 )
             }
         }

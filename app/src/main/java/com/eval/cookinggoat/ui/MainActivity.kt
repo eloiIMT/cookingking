@@ -78,23 +78,19 @@ class MainActivity : ComponentActivity() {
                                 onEvent = mealsViewModel::onEvent,
                                 onBackClick = { navController.popBackStack() },
                                 onMealClick = { meal ->
-                                    val IdEncoded = Uri.encode(meal.id.toString())
-                                    navController.navigate("Meals/$IdEncoded")
+                                    navController.navigate("MealDetails/${meal.id}")
                                 }
                             )
                         }
                         composable(
-                            route = "Meals/{id}",
+                            route = "MealDetails/{mealId}",
                             arguments = listOf(
-                                navArgument("mealId") { type = NavType.StringType },
+                                navArgument("mealId") { type = NavType.IntType },
                             )
                         ) { backStackEntry ->
                             val mealId = backStackEntry.arguments
-                                ?.getString("mealId")
-                                ?.let { Uri.decode(it) }
-                                .orEmpty()
-
-                            Text(text = "Meal Details for ID: $mealId")
+                                ?.getInt("mealId")
+                                ?: 0
 
                             val detailedMealViewModel: DetailedMealViewModel = viewModel()
                             val state by detailedMealViewModel.state.collectAsStateWithLifecycle()

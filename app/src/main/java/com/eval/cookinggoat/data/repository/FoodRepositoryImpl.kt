@@ -3,7 +3,9 @@ package com.eval.cookinggoat.data.repository
 import com.eval.cookinggoat.data.network.ApiClient
 import com.eval.cookinggoat.data.network.ApiService
 import com.eval.cookinggoat.data.network.toDomain
+import com.eval.cookinggoat.domain.model.Meal
 import com.eval.cookinggoat.domain.repository.FoodRepository
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 
@@ -26,27 +28,17 @@ class FoodRepositoryImpl(
     }.catch { throwable ->
         emit(Result.failure(throwable))
     }
-}
 
-//class MovieRepositoryImpl(
-//    private val apiService: ApiService = ApiClient.create()
-//) : MovieRepository {
-//
-//    override suspend fun findMovie(name: String) = flow {
-//        val response = apiService.searchMovie(
-//            search = name
-//        )
-//        emit(Result.success(response.toDomain()))
-//    }.catch { throwable ->
-//        emit(Result.failure(throwable))
-//    }
-//
-//    override suspend fun findMovieDetail(id: String) = flow {
-//        val response = apiService.searchMovieDetail(
-//            search = id
-//        )
-//        emit(Result.success(response.toDomain()))
-//    }.catch { throwable ->
-//        emit(Result.failure(throwable))
-//    }
-//}
+    override suspend fun findMealDetails(mealId: Int) = flow {
+        val response = apiService.getMealDetails(
+            mealId = mealId
+        ).mealDetail?.get(0)
+        if (response == null) {
+            emit(Result.failure(Exception("Meal not found")))
+            return@flow
+        }
+        emit(Result.success(response.toDomain()))
+    }.catch { throwable ->
+        emit(Result.failure(throwable))
+    }
+}

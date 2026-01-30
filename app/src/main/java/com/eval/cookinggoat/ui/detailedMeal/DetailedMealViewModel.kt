@@ -15,30 +15,30 @@ class DetailedMealViewModel(
     private val foodRepository: FoodRepository = FoodRepositoryImpl()
 ) : ViewModel() {
 
-    private val _state: MutableStateFlow<MealsState> = MutableStateFlow(MealsState())
+    private val _state: MutableStateFlow<DetailedMealState> = MutableStateFlow(DetailedMealState())
 
-    val state: StateFlow<MealsState>
+    val state: StateFlow<DetailedMealState>
         get() = _state.asStateFlow()
 
-    fun onEvent(event: MealsUIEvent) {
+    fun onEvent(event: DetailsUIEvent) {
         when (event) {
-            is MealsUIEvent.findReceipes -> findReceipes(event.categoryName)
+            is DetailsUIEvent.getReceipe -> getReceipe(event.mealId)
         }
     }
 
-    private fun findReceipes(categoryName: String) {
+    private fun getReceipe(mealId: Int) {
         viewModelScope.launch {
             _state.value.isLoading.let {
-                foodRepository.findMeals(categoryName).collect { result ->
+                foodRepository.findMealDetails(mealId).collect { result ->
                     result.fold(
-                        onSuccess = { meals ->
+                        onSuccess = { details ->
                             _state.update { state ->
-                                state.copy(isLoading = false, meals = meals)
+                                state.copy(isLoading = false, mealDetails = details)
                             }
                         },
                         onFailure = { error ->
                             _state.update { state ->
-                                state.copy(isLoading = false, meals = emptyList())
+                                state.copy(isLoading = false)
                             }
                         }
                     )
@@ -48,6 +48,6 @@ class DetailedMealViewModel(
     }
 }
 
-sealed interface MealsUIEvent {
-    data class findReceipes(val categoryName: String) : MealsUIEvent
+sealed interface DetailsUIEvent {
+    data class getReceipe(val mealId: Int) : DetailsUIEvent
 }

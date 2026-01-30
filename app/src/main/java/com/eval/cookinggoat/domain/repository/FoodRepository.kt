@@ -2,6 +2,7 @@ package com.eval.cookinggoat.domain.repository
 
 import com.eval.cookinggoat.domain.model.Category
 import com.eval.cookinggoat.domain.model.Meal
+import com.eval.cookinggoat.domain.model.MealDetails
 import kotlinx.coroutines.flow.Flow
 
 interface FoodRepository {
@@ -10,5 +11,5 @@ interface FoodRepository {
 
     suspend fun getAllCategories(): Flow<Result<List<Category>>>
 
-//    suspend fun findMovieDetail(id: String): Flow<Result<List<Movie>>>
+    suspend fun findMealDetails(mealId: Int): Flow<Result<MealDetails>>
 }
