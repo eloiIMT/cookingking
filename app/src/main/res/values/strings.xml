@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">CookingKing</string>
+    <string name="ingredients_title">Ingredients</string>
+    <string name="instructions_title">Instructions</string>
+    <string name="categories_title">Choose a category :</string>
+    <string name="search_bar_placeholder">Search meals...</string>
+    <string name="search_description">Search</string>
+    <string name="clear_search_description">Clear Search</string>
+    <string name="steps_title">Step %1$d</string>
+    <string name="tags_label">Tags</string>
+    <string name="back_description">Back</string>
+    <string name="youtube_player_icon">Play %1$s</string>
+    <string name="receipe_video_name">Receipe Video</string>
 </resources>

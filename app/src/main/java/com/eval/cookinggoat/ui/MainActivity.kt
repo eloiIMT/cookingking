@@ -1,5 +1,6 @@
 package com.eval.cookinggoat.ui
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -23,10 +24,12 @@ import com.eval.cookinggoat.ui.categories.CategoriesScreen
 import com.eval.cookinggoat.ui.categories.CategoriesViewModel
 import com.eval.cookinggoat.ui.detailedMeal.DetailedMealScreen
 import com.eval.cookinggoat.ui.detailedMeal.DetailedMealViewModel
+import com.eval.cookinggoat.ui.detailedMeal.DetailsUIEvent
 import com.eval.cookinggoat.ui.meals.MealsScreen
 import com.eval.cookinggoat.ui.meals.MealsState
 import com.eval.cookinggoat.ui.meals.MealsViewModel
 import com.eval.cookinggoat.ui.theme.CookingKingTheme
+import androidx.core.net.toUri
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -99,7 +102,18 @@ class MainActivity : ComponentActivity() {
                                 modifier = Modifier.padding(paddingValues),
                                 mealId = mealId,
                                 state = state,
-                                onEvent = detailedMealViewModel::onEvent,
+                                onEvent = { event ->
+                                    when (event) {
+                                        is DetailsUIEvent.NavigateToVideo -> {
+                                            val intent = Intent(
+                                                Intent.ACTION_VIEW,
+                                                "https://www.youtube.com/watch?v=${event.videoId}".toUri()
+                                            )
+                                            startActivity(intent)
+                                        }
+                                        else -> detailedMealViewModel.onEvent(event)
+                                    }
+                                },
                                 onBackClick = { navController.popBackStack() }
                             )
                         }

@@ -64,7 +64,7 @@ fun MealsScreen (
                     modifier = Modifier.align(Alignment.Center)
                 )
             }
-            Spacer(modifier = Modifier.width(48.dp)) // Compense la largeur de l'IconButton
+            Spacer(modifier = Modifier.width(48.dp))
         }
 
         Spacer(modifier = Modifier.height(10.dp))

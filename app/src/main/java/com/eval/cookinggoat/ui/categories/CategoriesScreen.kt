@@ -16,9 +16,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.eval.cookinggoat.R
 import com.eval.cookinggoat.domain.model.Category
 import com.eval.cookinggoat.ui.component.CategoryCard
 
@@ -37,7 +39,7 @@ fun CategoriesScreen (
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Choose a category :",
+            text = stringResource(R.string.categories_title),
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold
         )

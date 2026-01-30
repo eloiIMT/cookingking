@@ -23,6 +23,9 @@ class DetailedMealViewModel(
     fun onEvent(event: DetailsUIEvent) {
         when (event) {
             is DetailsUIEvent.getReceipe -> getReceipe(event.mealId)
+            is DetailsUIEvent.NavigateToVideo -> {
+
+            }
         }
     }
 
@@ -50,4 +53,5 @@ class DetailedMealViewModel(
 
 sealed interface DetailsUIEvent {
     data class getReceipe(val mealId: Int) : DetailsUIEvent
+    data class NavigateToVideo(val videoId: String) : DetailsUIEvent
 }

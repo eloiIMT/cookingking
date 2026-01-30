@@ -12,7 +12,9 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.eval.cookinggoat.R
 
 @Composable
 fun SearchBar(
@@ -26,11 +28,11 @@ fun SearchBar(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
-        placeholder = { Text("Search meals...") },
+        placeholder = { Text(stringResource(R.string.search_bar_placeholder)) },
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Search,
-                contentDescription = "Search"
+                contentDescription = stringResource(R.string.search_description)
             )
         },
         trailingIcon = {
@@ -38,7 +40,7 @@ fun SearchBar(
                 IconButton(onClick = { onSearchQueryChange("") }) {
                     Icon(
                         imageVector = Icons.Default.Close,
-                        contentDescription = "Clear"
+                        contentDescription = stringResource(R.string.clear_search_description)
                     )
                 }
             }

@@ -63,6 +63,7 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.material3.adaptive.navigation.suite)
     implementation(libs.androidx.navigation.compose)
+    implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
     implementation(libs.firebase.appdistribution.gradle)
     testImplementation(libs.junit)
     implementation(libs.retrofit)
